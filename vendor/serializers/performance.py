@@ -1,7 +1,24 @@
 from rest_framework import serializers
 
-from vendor.models import HistoricalPerformance
+from vendor.models import Vendor, HistoricalPerformance
 from vendor.serializers import VendorSerializer
+
+
+class PerformanceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Vendor
+        fields = (
+            "on_time_delivery_rate",
+            "quality_rating_avg",
+            "avg_response_time",
+            "fulfillment_rate",
+        )
+        read_only_fields = (
+            "on_time_delivery_rate",
+            "quality_rating_avg",
+            "avg_response_time",
+            "fulfillment_rate",
+        )
 
 
 class HistoricalPerformanceSerializer(serializers.ModelSerializer):
