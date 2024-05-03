@@ -68,3 +68,16 @@ class PurchaseOrderViewSet(
         calculate_performance_metrics.delay(kwargs["po_number"])
         return self.retrieve(request, *args, **kwargs)
 
+    @extend_schema(tags=["purchase_orders"], request=None, responses={status.HTTP_204_NO_CONTENT: None})
+    @action(detail=True, methods=["POST"])
+    def cancel(self, request, *args, **kwargs):
+        instance = self.queryset.get(po_number=kwargs["po_number"])
+        if instance.status == "cancelled":
+            return Response(
+                {"message": "PO has already been cancelled."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        instance.status = "cancelled"
+        instance.save()
+        calculate_performance_metrics.delay(kwargs["po_number"])
+        return Response(status=status.HTTP_204_NO_CONTENT)
