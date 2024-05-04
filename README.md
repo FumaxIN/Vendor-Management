@@ -229,6 +229,6 @@ celery -A core.celery_app worker --beat --loglevel=info
   
 
 ### Note for Performance Metrics  
-For efficient calculation of performance metrics, instead of iterating over all the POs, I have utilised `cached_data` field in `vendor` model which stores and updates total, completed, on-time and acknowledged POs after each update. <br />
+For efficient calculation of performance metrics, instead of iterating over all the POs, I have utilised `cached_data` field in `vendor` model which stores and updates total, completed, on-time and acknowledged POs after each action. <br />
 
-Celery schedules can be easily implemented and can be run once a day to fix the metrics. <br />
+Celery schedules can be easily implemented and can be run once a day to fix cross-check and fix the performance metrics. <br />
