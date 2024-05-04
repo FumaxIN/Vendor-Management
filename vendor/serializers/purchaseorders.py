@@ -63,7 +63,4 @@ class CompletePurchaseOrderSerializer(serializers.ModelSerializer):
         instance.status = 'completed'
         instance.quality_rating = validated_data.get('quality_rating')
         instance.save()
-        print("HELLLLLLLLLLLLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
-        print(instance.status)
-        print(instance.quality_rating)
         return instance
