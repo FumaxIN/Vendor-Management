@@ -42,6 +42,15 @@ class PurchaseOrderSerializer(serializers.ModelSerializer):
         vendor = get_object_or_404(Vendor, vendor_code=vendor_id)
         return PurchaseOrder.objects.create(vendor=vendor, **validated_data)
 
+    def update(self, instance, validated_data):
+        instance.items = validated_data.get('items', instance.items)
+        instance.delivery_date = validated_data.get('delivery_date', instance.delivery_date)
+        instance.quantity = 0
+        for key, value in instance.items.items():
+            instance.quantity += int(value)
+        instance.save()
+        return instance
+
 
 class CompletePurchaseOrderSerializer(serializers.ModelSerializer):
     class Meta:
@@ -54,4 +63,7 @@ class CompletePurchaseOrderSerializer(serializers.ModelSerializer):
         instance.status = 'completed'
         instance.quality_rating = validated_data.get('quality_rating')
         instance.save()
+        print("HELLLLLLLLLLLLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
+        print(instance.status)
+        print(instance.quality_rating)
         return instance
