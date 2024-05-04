@@ -151,6 +151,7 @@ celery -A core.celery_app worker --beat --loglevel=info
     ```
     GET: /api/vendors/1f0afb51-c740-4d2b-8e0a-4fd99bbf7075/performance
     ```
+  `avg_response_time` is stored in seconds which can be converted to any unit using serializers.
 
 
 ### Purchase Order endpoints
